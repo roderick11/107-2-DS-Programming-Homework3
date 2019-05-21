@@ -49,12 +49,18 @@ finStatement <- read_csv("http://mopsfin.twse.com.tw/opendata/t187ap06_O_ci.csv"
 變數**營業利益（損失）**是公司本業的利益（若為正值）或損失（若為負值）。請找出有營業損失的公司名稱，存成character class的答案物件loss1Companies。
 ```{r ans11}
 # loss1Companies
+finStatement$`營業利益（損失）`< 0 -> loss1Companies
+loss1Companies <-  as.character(loss1Companies)
+loss1Companies
 ```
 
 ### 1.2 每股盈餘
 請找出每股盈餘為負值的公司名稱，存成character class的答案物件loss2Companies。
 ```{r ans12}
 # loss2Companies
+finStatement$`基本每股盈餘（元）` < 0 -> loss2Companies
+loss2Companies <- as.character(loss2Companies)
+loss2Companies
 ```
 
 ### 1.3 單一條件成立
@@ -69,12 +75,21 @@ finStatement <- read_csv("http://mopsfin.twse.com.tw/opendata/t187ap06_O_ci.csv"
 
 ```{r ans13}
 # only1LossCompanies
+finStatement$`營業利益（損失）`> 0 & finStatement$`基本每股盈餘（元）` < 0 -> a
+finStatement$`營業利益（損失）`< 0 & finStatement$`基本每股盈餘（元）` > 0 -> b
+a | b -> c
+finStatement$公司名稱 -> company
+company[c] -> only1LossCompanies
+only1LossCompanies <- as.character(only1LossCompanies)
+only1LossCompanies
 ```
 
 ### 1.4 子樣本
 本題物件為data frame class，使用`[.R,.C]`選出符合上題條件的子樣本，存成data frame class的答案物件subsample。
 ```{r ans14}
 # subsample
+finStatement[a | b, ] -> subsample
+subsample
 ```
 
 ## 2 展覽資訊
@@ -94,6 +109,8 @@ str(exhibitionList[[1]])
 請使用`length()`檢查exhibitionList裡的活動數目，並把數值存在答案物件numExhibitions。
 ```{r ans21}
 # numExhibitions
+length(exhibitionList) -> numExhibitions
+numExhibitions
 ```
 
 ### 2.2 創建活動data frame
@@ -109,6 +126,18 @@ str(exhibitionList[[1]])
 
 ```{r ans22}
 # df_oneShow
+df_oneShow <- data.frame(
+  title=exhibitionList[[1]]$title,
+  time=exhibitionList[[1]]$showInfo[[1]]$time,
+  location=exhibitionList[[1]]$showInfo[[1]]$location,
+  locationName=exhibitionList[[1]]$showInfo[[1]]$locationName,
+  price=exhibitionList[[1]]$showInfo[[1]]$price,
+  endTime=exhibitionList[[1]]$showInfo[[1]]$endTime,
+  sourceWebName=exhibitionList[[1]]$sourceWebName,
+  stringsAsFactors=F
+)
+
+df_oneShow
 ```
 
 ### 2.3 活動創立函數
@@ -125,6 +154,21 @@ return(df_oneShow)
 
 ```{r ans23}
 #  dataframe_show_info
+dataframe_show_info <- function(exhibitionInput){
+  df_oneShow <- data.frame(
+  title=exhibitionInput$title,
+  time=exhibitionInput$showInfo[[1]]$time,
+  location=exhibitionInput$showInfo[[1]]$location,
+  locationName=exhibitionInput$showInfo[[1]]$locationName,
+  price=exhibitionInput$showInfo[[1]]$price,
+  endTime=exhibitionInput$showInfo[[1]]$endTime,
+  sourceWebName=exhibitionInput$sourceWebName,
+  stringsAsFactors=F
+)
+  return(df_oneShow)
+}
+
+dataframe_show_info
 ```
 
 ### 2.4 活動資訊來源種類
@@ -139,6 +183,8 @@ map_dfr(exhibitionList,dataframe_show_info) -> df_allShows
 
 ```{r ans24}
 # levels(df_allShows$sourceWebName)
+df_allShows$sourceWebName <- as.factor(df_allShows$sourceWebName)
+levels(df_allShows$sourceWebName)
 ```
 
 ### 2.5 計算單一來源
@@ -146,6 +192,10 @@ map_dfr(exhibitionList,dataframe_show_info) -> df_allShows
 
 ```{r ans25}
 # totalCount
+total1 <- (df_allShows$sourceWebName) == "全國藝文活動資訊系統"
+totalCount <- sum(total1)
+totalCount <- as.numeric(totalCount)
+totalCount
 ```
 
 

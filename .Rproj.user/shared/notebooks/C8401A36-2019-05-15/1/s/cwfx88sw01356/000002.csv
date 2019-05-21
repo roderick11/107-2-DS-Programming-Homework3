@@ -1,0 +1,11 @@
+"0","utility_cobb_douglass <- function(x,y,.alpha,.beta){"
+"0","  utilValue <- x^.alpha*y^.beta # 程序產生output值"
+"0","  return(utilValue) # 傳回output值"
+"0","}"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
