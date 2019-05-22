@@ -1,0 +1,11 @@
+"0","library(readr)"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","invoiceList <- read_csv(""https://raw.githubusercontent.com/tpemartin/github-data/master/invoiceList.csv"","
+"0","col_types = cols(訂單時間.以訂單時區顯示. = col_character()))"
+"0","names(invoiceList)[[2]] <- ""訂單時區之下單時間"""

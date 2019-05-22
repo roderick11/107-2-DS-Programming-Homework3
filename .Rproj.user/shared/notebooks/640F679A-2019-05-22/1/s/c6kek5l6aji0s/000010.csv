@@ -1,0 +1,8 @@
+"0","library(lubridate)"
+"0","a <- ymd_hms(""1973-02-21 12:05:22"",tz=""America/New_York"")"
+"0","timez1 <-with_tz(a, tz=""Asia/Taipei"")"
+"0","ymd_hms_tzChange <- function(x,y,z){"
+"0","  a <- ymd_hms(x,tz=y)"
+"0","  timez1 <-with_tz(a, tzone = z)"
+"0","  return(timez1)"
+"0","}"
