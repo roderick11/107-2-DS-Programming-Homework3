@@ -1,0 +1,4 @@
+"0","utility_cobb_douglass2 <- function(x,y,.alpha=0.5,.beta=0.5){"
+"0","  utilValue <- x^.alpha*y^.beta"
+"0","  return(utilValue)"
+"0","}"
