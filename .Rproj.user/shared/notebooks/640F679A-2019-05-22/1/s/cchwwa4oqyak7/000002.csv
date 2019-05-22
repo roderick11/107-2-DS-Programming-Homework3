@@ -1,0 +1,15 @@
+"0","date_convert_twYM <- function(x){"
+"0","  library(stringr); library(lubridate)"
+"0","  yyyy <-as.integer(str_extract(x,""(?<=(民國))[:digit:]+""))+1911"
+"0","  mm <-str_extract(x,""[:digit:]+(?=月)"")"
+"0","  yyyymmdd <- ymd(str_c(yyyy,mm,""01"",sep=""-""))"
+"0","  ans <- ymd(yyyymmdd)"
+"0","  return(ans)"
+"0","}"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"

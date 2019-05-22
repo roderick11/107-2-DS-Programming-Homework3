@@ -70,3 +70,45 @@ ymd_hms_tzChange <- function(x,y,z){
 }
 ```
 
+```{r}
+#錯誤
+
+ymd_hms_tzChange <- function(date, TZ1, TZ2){
+  nyDT2 <- ymd_hms("1973-02-21 12:05:22", tz=TZ1)
+  tpDT2 <- with_tz(nyDT2, tz=TZ2)
+  return(tpDT2)
+  }
+#更正
+
+ymd_hms_tzChange <- function(date, TZ1, TZ2){
+  nyDT2 <- ymd_hms(date, tz=TZ1)
+  tpDT2 <- with_tz(nyDT2, tzone=TZ2)
+  return(tpDT2)
+  }
+```
+
+```{r}
+library(stringr)
+sample(99:103,15,replace = T)-> yy
+sample(1:12,15,replace=T)-> mm
+str_c("民國",str_pad(yy,3,"left","0"),"年",mm,"月") -> twDates
+```
+
+```{r}
+library(stringr); library(lubridate)
+yyyy<-as.integer(str_extract(twDates,"(?<=(民國))[:digit:]+"))+1911
+mm<-str_extract(twDates,"[:digit:]+(?=月)")
+yyyymmdd <- ymd(str_c(yyyy,mm,"01",sep="-"))
+```
+
+```{r}
+date_convert_twYM <- function(x){
+  library(stringr); library(lubridate)
+  yyyy <-as.integer(str_extract(x,"(?<=(民國))[:digit:]+"))+1911
+  mm <-str_extract(x,"[:digit:]+(?=月)")
+  yyyymmdd <- ymd(str_c(yyyy,mm,"01",sep="-"))
+  ans <- ymd(yyyymmdd)
+  return(ans)
+}
+```
+
